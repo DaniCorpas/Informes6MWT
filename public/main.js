@@ -7,6 +7,7 @@ let dataFinal = null;
 let dataPascon = [];
 let dataStops = [];
 let dataData = [];
+let nomPDF = '6MWT_informe.pdf'; // Nom del PDF generat
 
 // Declaració de les dades Hardcoded
 const ID = 225;
@@ -749,6 +750,48 @@ function enableDragAndDrop() {
 }
 
 //------------------------------------------------------------------------
+// Funció per generar el PDF
+//------------------------------------------------------------------------
+function descargarInformePDF() {
+    // Seleccionamos el contenedor completo del informe; en este caso, #info
+    const informeElement = document.getElementById("info");
+
+    if (!informeElement) {
+        console.error("El contenedor del informe no existe.");
+        return;
+    }
+
+    // Configuración para html2pdf
+    const options = {
+        margin: 1, // Margen en cm
+        filename: nomPDF || "informe.pdf", // Nombre del PDF
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 }, // A mayor escala, mayor calidad
+        jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+    };
+
+    // Generar y descargar
+    html2pdf()
+        .set(options)
+        .from(informeElement)
+        .save()
+        .catch(error => console.error("Error al generar el PDF:", error));
+}
+
+// ------------------------------------------------------------------
+// Al final del archivo o cuando inicies la app, 
+// añadimos el listener para el botón de descarga
+// ------------------------------------------------------------------
+document.addEventListener('DOMContentLoaded', () => {
+    // Cuando se cargue todo, vinculamos el botón con id="downloadPDFBtn"
+    const downloadBtn = document.getElementById("btnPDF");
+    if (downloadBtn) {
+        downloadBtn.addEventListener("click", descargarInformePDF);
+    }
+});
+
+//------------------------------------------------------------------------
 // Funció per inicialitzar l'aplicació
 //------------------------------------------------------------------------
 loadTestData();
+

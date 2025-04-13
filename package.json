@@ -5,11 +5,14 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "node src/index.js"
+    "dev": "node src/app.js"
   },
   "author": "Daniel Corpas Garcia",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^9.23.0"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
   }
 }

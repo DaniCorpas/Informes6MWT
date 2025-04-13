@@ -1,0 +1,203 @@
+/* estil.css */
+
+/* Estil pel cos */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
+}
+
+/* Contenidor general, per centrar i limitar amplada */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Estil per al titol */
+h1 {
+    margin-bottom: 1rem;        /* Espai entre el títol i la resta del contingut */
+    text-align: center;     /* Centrar el títol */
+}
+
+.data-bloc {
+    background-color: #fff;         /* Color de fons blanc */
+    border: 1px solid #ddd;       /* Bordes gris clar */
+    border-radius: 6px;       /* Arrodoniment de les cantonades */
+    padding: 15px;               /* Espai interior */
+    margin-bottom: 15px;       /* Espai entre blocs */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);   /* Ombra lleugera */
+}
+
+.data-bloc h2 {
+    margin-top: 0;       /* Espai superior zero per al títol */
+    margin-bottom: 0.5rem;  /* Espai inferior dels titols h2*/
+    font-size: 1.5rem;
+    color: #000000;
+    padding-bottom: 1rem;
+    text-align: center;     /* Centrar el títol */
+    background-color: #8ea585; /* Color de fons gris clar */
+}
+
+.data-bloc p {
+    margin: 0.3rem 0;
+    font-size: 0.95rem;
+    color: #555;
+}
+
+.data-bloc p strong {
+    color: #333;
+}
+
+/* Estil per a la taula */
+.sub-seccio-taula {
+    background-color: #fafafa;
+    border: 1px dashed #ccc;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+/* Titol de la taula */
+.sub-seccio-taula h3 {
+    margin-top: 0;
+    font-size: 1rem;
+    color: #666;
+}
+
+.table-header {
+    display: flex;
+    align-items: center;
+    background-color: #48644e; /* Color de fondo */
+    color: #fff; /* Color del text */
+    border-radius: 5px 5px 0 0; /* Bordes redondeados en la parte superior */
+    padding: 10px; /* Espaciat interior */
+}
+
+.header-left,
+.header-center,
+.header-right {
+    flex: 1; /* Cada secció ocupa la mateixa amplada */
+}
+
+.header-center {
+    flex: 1 0; /* Amplada flexible */
+    text-align: center; /* Centrar el text */
+}
+
+.header-left {
+    margin-right: 10px; /* Espai entre la secció esquerra i la central */
+}
+
+.table-header h3 {
+    margin: 0; /* Espai entre el títol i la resta del contingut */
+    font-size: 1.2rem; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    color: #fff; /* Color del text */
+}
+
+/* Estil per al títol de la taula */
+.table-title {
+    text-align: center; /* Centrar el texto */
+    font-size: 1.2rem; /* Tamaño del texto */
+    font-weight: bold; /* Texto en negrita */
+    margin-top: 0px; 
+    margin-bottom: 0px; /* Espacio entre el título y la tabla */
+    background-color: #48644e; /* Color de fondo */
+    color: #fff; /* Color del texto */
+    padding: 10px; /* Espaciado interno */
+    border-radius: 5px 5px 0 0; /* Bordes redondeados en la parte superior */
+}
+
+.toggle-button {
+    background-color: #94ac99; /* Color de fons transparent */
+    color: #363636; /* Color del text gris fosc */
+    font-size: 1.2rem; /* Mida de la lletra */
+    width: 40px; /* Amplada del botó */
+    height: 40px; /* Alçada del botó */
+    border-radius: 5px; /* Sense bordes */
+    border: none; /* Bordes gris clar */
+    cursor: pointer; /* Cursor de mà al passar per sobre */
+    margin: 0;
+    padding: 0;
+}
+
+.toggle-button:hover {
+    background-color: #eee; /* Color de fons gris clar */
+}
+
+/* Estil per a les cel·les de la taula */
+.fila-taula {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+.columna-taula {
+    flex: 1;
+    min-width: 200px; /* Amplada mínima per a les columnes */
+}
+
+.data-table {
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;   /* Arrodoniment de les cantonades */
+    background-color: #fff; /* Color de fons blanc */
+    /* border-collapse: collapse;
+    margin-top: 10px; */
+}
+
+/* Tabla */
+.data-table table {
+    width: 100%;
+    border-collapse: collapse; /* Col·lapsar els marges de la taula */
+}
+
+/* Estil per a les cel·les de la taula */
+.data-table th,
+.data-table td {
+    border: 1px solid #ddd; /* Bordes gris clar */
+    padding: 10px; /* Espai interior */
+    text-align: center; /* Text alineat a l'esquerra */
+    vertical-align: middle; /* Alineació vertical al centre */
+    font-size: 0.95rem; /* Mida de la lletra */
+}
+
+/* Primer fila de la taula (títol del bloc) */
+/*.data-table thead tr:first-child th {
+    background-color: #8ea585; 
+    color: #fff; 
+    font-weight: bold; 
+    font-size: 1.10rem; 
+    text-transform: uppercase; 
+    text-align: center; 
+    width: 100%; 
+}*/
+
+/* segona fila de la taula (nom de la dada) */
+.data-table thead tr:first-child th {
+    background-color: #678d70;  /* Color de fons gris clar */   
+    color: #ffffff; /* Color del text gris fosc */
+    font-weight: normal; /* Text normal */
+    font-size: 1rem; /* Mida de la lletra */
+    text-align: center; /* Text alineat al centre */
+}
+
+/* Última fila de la taula (dades) */
+.data-table tbody tr {
+    background-color: #f9f9f9; /* Color de fons gris clar */
+    color: #333; /* Color del text gris fosc */
+    font-weight: normal; /* Text normal */
+    font-size: 0.95rem; /* Mida de la lletra */
+    text-align: center; /* Text alineat al centre */
+}
+
+.data-table tbody tr:hover {
+    background-color: #f9f9f9; /* Color de fons gris clar */
+    /* cursor: pointer; /* Cursor de mà al passar per sobre */
+}
+
+.hidden {
+    display: none; /* Amagar l'element */
+}
+

@@ -80,7 +80,7 @@ function renderData() {
 
     // (1) Bloc Test
     html += `
-        <div class="data-table">
+        <div class="data-table" id="dragTest" draggable="true">
             <div class="table-header">
                 <div class="header-left">
                     <button type="button" class="toggle-button" data-target="test-table">-</button>
@@ -119,7 +119,7 @@ function renderData() {
 
     // (2) Bloc Antropometic Values
     html += `
-        <div class="data-table">
+        <div class="data-table" id="dragAntropometric" draggable="true">
             <div class="table-header">
                 <div class="header-left">
                     <button type="button" class="toggle-button" data-target="antropometric-table">-</button>
@@ -158,7 +158,7 @@ function renderData() {
 
     // (3) Bloc Comments
     html += `
-        <div class="data-table">
+        <div class="data-table" id="dragComments" draggable="true">
             <div class="table-header">
                 <div class="header-left">
                     <button type="button" class="toggle-button" data-target="comments-table">-</button>
@@ -182,7 +182,7 @@ function renderData() {
 
     // (4) Bloc Basal Values
     html += `
-        <div class="data-table">
+        <div class="data-table"  id="dragBasal" draggable="true">
             <div class="table-header">
                 <div class="header-left">
                     <button type="button" class="toggle-button" data-target="basal-table">-</button>
@@ -221,7 +221,7 @@ function renderData() {
 
     // (5) Bloc Final Values
     html += `
-        <div class="data-table">
+        <div class="data-table"  id="dragFinal" draggable="true">
             <div class="table-header">
                 <div class="header-left">
                     <button type="button" class="toggle-button" data-target="final-table">-</button>
@@ -254,7 +254,7 @@ function renderData() {
 
     // (6) Bloc Rest Values
     html += `
-        <div class="data-table">
+        <div class="data-table" id="dragRest" draggable="true">
             <div class="table-header">
                 <div class="header-left">
                     <button type="button" class="toggle-button" data-target="rest-table">-</button>
@@ -293,7 +293,7 @@ function renderData() {
 
     // (7) Bloc Computed values
     html += `
-        <div class="data-table">
+        <div class="data-table" id="dragComputed" draggable="true">
             <div class="table-header">
                 <div class="header-left">
                     <button type="button" class="toggle-button" data-target="computed-table">-</button>
@@ -352,7 +352,7 @@ function renderData() {
 
     // (8) Bloc Average values
     html += `
-        <div class="data-table">
+        <div class="data-table" id="dragAverage" draggable="true">
             <div class="table-header">
                 <div class="header-left">
                     <button type="button" class="toggle-button" data-target="average-table">-</button>
@@ -399,7 +399,7 @@ function renderData() {
 
     // (9) Bloc Periodic values
     html += `
-        <div class="data-table">
+        <div class="data-table" id="dragPeriodic" draggable="true">
             <div class="table-header">
                 <div class="header-left">
                     <button type="button" class="toggle-button" data-target="periodic-table">-</button>
@@ -446,7 +446,7 @@ function renderData() {
 
     // (10) Bloc Checkpoints
     html += `
-        <div class="data-table">
+        <div class="data-table" id="dragCheckpoints" draggable="true">
             <div class="table-header">
                 <div class="header-left">
                     <button type="button" class="toggle-button" data-target="checkpoints-table">-</button>
@@ -510,6 +510,9 @@ function renderData() {
     `;
 
     div.innerHTML = html;
+
+    // Enable drag and drop functionality
+    enableDragAndDrop();
 }
 
 //------------------------------------------------------------------------
@@ -699,6 +702,49 @@ function funcioPeriodicValues() {
             periodicSValues.push(null);
             periodicHValues.push(null);
         }
+    });
+}
+
+//------------------------------------------------------------------------
+// Funció per poder fer drag and drop 
+//------------------------------------------------------------------------
+function enableDragAndDrop() {
+    const blocks = document.querySelectorAll('.data-table');
+
+    blocks.forEach(block => {
+        block.addEventListener('dragstart', (event) => {
+            event.dataTransfer.setData('text/plain', event.target.id);
+            event.target.classList.add('dragging');
+        });
+
+        block.addEventListener('dragend', (event) => {
+            event.target.classList.remove('dragging');
+        });
+
+        block.addEventListener('dragover', (event) => {
+            event.preventDefault(); // Permitir el drop
+            const draggingBlock = document.querySelector('.dragging');
+            const container = event.target.closest('.data-table');
+            if (container && container !== draggingBlock) {
+                const bounding = container.getBoundingClientRect();
+                const offset = event.clientY - bounding.top;
+                if (offset > bounding.height / 2) {
+                    container.parentNode.insertBefore(draggingBlock, container.nextSibling);
+                } else {
+                    container.parentNode.insertBefore(draggingBlock, container);
+                }
+            }
+        });
+
+        block.addEventListener('drop', (event) => {
+            event.preventDefault();
+            const draggedBlockId = event.dataTransfer.getData('text/plain');
+            const draggedBlock = document.getElementById(draggedBlockId);
+            const dropTarget = event.target.closest('.data-table');
+            if (dropTarget && draggedBlock) {
+                dropTarget.parentNode.insertBefore(draggedBlock, dropTarget.nextSibling);
+            }
+        });
     });
 }
 

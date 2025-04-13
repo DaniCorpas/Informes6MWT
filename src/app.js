@@ -30,6 +30,5 @@ app.get('/api/data', (req, res) => {
 });
 
 // Arrenquem el servidor 
-app.listen(PORT, () => {
-    console.log('Sevidor escoltant a http://localhost:${PORT}');
+app.listen(PORT, '0.0.0.0', () => {
 });

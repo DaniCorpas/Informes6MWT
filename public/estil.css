@@ -135,6 +135,7 @@ h1 {
 .columna-taula {
     flex: 1;
     min-width: 200px; /* Amplada mínima per a les columnes */
+    max-width: 100%; /* Amplada màxima per a les columnes */
 }
 
 .data-table {
@@ -143,6 +144,7 @@ h1 {
     border-radius: 5px;
     overflow: hidden;   /* Arrodoniment de les cantonades */
     background-color: #fff; /* Color de fons blanc */
+    overflow-x: auto; /* Permetre el desplaçament horitzontal */
     /* border-collapse: collapse;
     margin-top: 10px; */
 }
@@ -162,17 +164,6 @@ h1 {
     vertical-align: middle; /* Alineació vertical al centre */
     font-size: 0.95rem; /* Mida de la lletra */
 }
-
-/* Primer fila de la taula (títol del bloc) */
-/*.data-table thead tr:first-child th {
-    background-color: #8ea585; 
-    color: #fff; 
-    font-weight: bold; 
-    font-size: 1.10rem; 
-    text-transform: uppercase; 
-    text-align: center; 
-    width: 100%; 
-}*/
 
 /* segona fila de la taula (nom de la dada) */
 .data-table thead tr:first-child th {
@@ -199,5 +190,86 @@ h1 {
 
 .hidden {
     display: none; /* Amagar l'element */
+}
+
+/* Para pantallas pequeñas (móviles) */
+@media (max-width: 768px) {
+    .data-table {
+        margin-bottom: 5px; /* Reducir el margen entre bloques */
+        border: none; /* Eliminar bordes para simplificar */
+        font-size: 0.2rem; /* Reducir el tamaño general de la fuente */
+    }
+
+    .data-table table {
+        width: 100%; /* Asegurar que la tabla ocupe todo el ancho */
+        table-layout: fixed; /* Ajustar automáticamente las columnas */
+        font-size: 0.2rem; /* Reducir aún más el tamaño de la fuente */
+    }
+
+    .data-table th,
+    .data-table td {
+        padding: 2px; /* Reducir el espaciado interno */
+        font-size: 0.2rem; /* Reducir el tamaño del texto */
+        word-wrap: break-word; /* Ajustar el contenido largo dentro de las celdas */
+    }
+
+    .table-header {
+        display: flex; /* Mantener diseño horizontal */
+        flex-direction: row; /* Asegurar que los elementos estén en fila */
+        align-items: center; /* Alinear verticalmente los elementos */
+        justify-content: space-between; /* Espaciar los elementos horizontalmente */
+        padding: 5px; /* Reducir el espaciado interno */
+    }
+
+    .header-left,
+    .header-center,
+    .header-right {
+        flex: none; /* Desactivar el comportamiento flexible */
+        margin-bottom: 0; /* Eliminar márgenes adicionales */
+    }
+
+    .header-left {
+        margin-right: 10px; /* Espacio entre el botón y el título */
+    }
+
+    .toggle-button {
+        width: 40px; /* Tamaño fijo del botón */
+        height: 40px; /* Tamaño fijo del botón */
+        font-size: 0.5rem; /* Reducir el tamaño de la fuente del botón */
+        margin: 0; /* Eliminar márgenes adicionales */
+        padding: 0; /* Eliminar espaciado interno */
+    }
+
+    .table-title {
+        font-size: 0.5rem; /* Reducir el tamaño del título */
+        padding: 3px; /* Reducir el espaciado interno */
+        text-align: center; /* Centrar el texto */
+    }
+
+    .data-bloc {
+        padding: 5px; /* Reducir el espaciado interno del bloque */
+        margin-bottom: 5px; /* Reducir el margen entre bloques */
+    }
+
+    .data-bloc h2 {
+        font-size: 0.7rem; /* Reducir el tamaño del título del bloque */
+        padding-bottom: 0.3rem; /* Reducir el espaciado inferior */
+    }
+}
+
+/* Para pantallas medianas (tabletas) */
+@media (max-width: 1024px) {
+    .data-table {
+        margin-bottom: 20px;
+    }
+
+    .data-table th,
+    .data-table td {
+        font-size: 0.9rem; /* Ajustar tamaño de fuente */
+    }
+
+    .table-header {
+        padding: 8px; /* Reducir espaciado interno */
+    }
 }
 

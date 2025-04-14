@@ -72,6 +72,7 @@ h1 {
     color: #fff; /* Color del text */
     border-radius: 5px 5px 0 0; /* Bordes redondeados en la parte superior */
     padding: 10px; /* Espaciat interior */
+    page-break-inside: avoid; /* Evitar cortes en los encabezados */
 }
 
 .header-left,
@@ -145,6 +146,8 @@ h1 {
     overflow: hidden;   /* Arrodoniment de les cantonades */
     background-color: #fff; /* Color de fons blanc */
     overflow-x: auto; /* Permetre el desplaçament horitzontal */
+    page-break-inside: avoid; /* Evitar que las tablas se corten */
+    margin-bottom: 10mm; /* Espaciado entre tablas */
     /* border-collapse: collapse;
     margin-top: 10px; */
 }
@@ -271,5 +274,39 @@ h1 {
     .table-header {
         padding: 8px; /* Reducir espaciado interno */
     }
+}
+
+table {
+    width: 100%; /* Asegurar que las tablas ocupen todo el ancho disponible */
+    border-collapse: collapse;
+}
+
+.pdf-style {
+    font-size: 0.8rem; /* Reducir el tamaño de fuente */
+    line-height: 1.2; /* Ajustar el interlineado */
+}
+
+.pdf-style .data-table {
+    margin-bottom: 5mm; /* Reducir el margen entre tablas */
+}
+
+.pdf-style .data-table th,
+.pdf-style .data-table td {
+    padding: 5px; /* Reducir el espaciado interno de las celdas */
+    font-size: 0.75rem; /* Reducir el tamaño de fuente en las tablas */
+}
+
+.pdf-style h1, .pdf-style h2, .pdf-style h3 {
+    font-size: 1rem; /* Reducir el tamaño de los encabezados */
+    margin: 5px 0; /* Reducir márgenes */
+}
+
+.pdf-style .toggle-button {
+    display: none; /* Ocultar el botón al generar el PDF */
+}
+
+.pdf-style .table-title {
+    font-size: 0.8rem; /* Reducir el tamaño del título de las tablas */
+    padding: 5px; /* Ajustar el espaciado interno */
 }
 

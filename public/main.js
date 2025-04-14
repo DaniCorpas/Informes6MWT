@@ -15,6 +15,7 @@ const nom = "AAAA";
 const sexe = "Female";
 
 // Declaració de les dades pels càlculs
+let [date, time] = [null, null];
 let imc = 0;
 let hrP_Basal = 0;
 let hrP_Half_Rest = 0;
@@ -107,8 +108,8 @@ function renderData() {
                 </thead>
                 <tbody>
                     <tr>
-                        <td>${dataTest.date}</td>
-                        <td>${dataTest.date}</td>
+                        <td>${date}</td>
+                        <td>${time}</td>
                         <td>${dataTest.cone_distance} mts</td>
                         <td>${ID}</td>
                         <td>${dataTest.tid}</td>
@@ -149,7 +150,7 @@ function renderData() {
                         <td>${nom}</td>
                         <td>${sexe}</td>
                         <td>${dataTest.age} y</td>
-                        <td>${dataTest.weight} Kg- ${dataTest.height} Cms</td>
+                        <td>${dataTest.weight} Kg - ${dataTest.height} Cms</td>
                         <td>${imc} Kg/m<sup>2</sup></td>
                     </tr>
                 </tbody>
@@ -522,6 +523,11 @@ function renderData() {
 
 function funcioCalculs() {
     // Fem els càlculs necessaris
+
+    //Formategem la data i l'hora
+    [date, time] = dataTest.date.split("T");
+    time = time.split(".")[0]; // Agafem només la part de l'hora
+
     // Càlcul del IMC
     const heightMts = dataTest.height / 100;     // Convertim el height a metres
     const calculImc = dataTest.weight / (heightMts * heightMts);   // Càlcul del IMC 
@@ -753,7 +759,6 @@ function enableDragAndDrop() {
 // Funció per generar el PDF
 //------------------------------------------------------------------------
 function descargarInformePDF() {
-    // Seleccionamos el contenedor completo del informe; en este caso, #info
     const informeElement = document.getElementById("info");
 
     if (!informeElement) {
@@ -761,21 +766,33 @@ function descargarInformePDF() {
         return;
     }
 
+    // Añadir la clase para aplicar los estilos del PDF
+    informeElement.classList.add("pdf-style");
+
     // Configuración para html2pdf
     const options = {
-        margin: 1, // Margen en cm
-        filename: nomPDF || "informe.pdf", // Nombre del PDF
+        margin: [10, 10, 10, 10], // Márgenes en mm
+        filename: nomPDF || "informe.pdf",
         image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 }, // A mayor escala, mayor calidad
-        jsPDF: { unit: 'pt', format: 'a4', orientation: 'portrait' }
+        html2canvas: { scale: 2 }, // Escala para mejorar la calidad
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+        pagebreak: { mode: ['avoid-all', 'css', 'legacy'] } // Manejo de saltos de página
     };
 
-    // Generar y descargar
+    // Generar y descargar el PDF
     html2pdf()
         .set(options)
         .from(informeElement)
         .save()
-        .catch(error => console.error("Error al generar el PDF:", error));
+        .then(() => {
+            // Eliminar la clase después de generar el PDF
+            informeElement.classList.remove("pdf-style");
+        })
+        .catch(error => {
+            console.error("Error al generar el PDF:", error);
+            // Asegurarse de eliminar la clase en caso de error
+            informeElement.classList.remove("pdf-style");
+        });
 }
 
 // ------------------------------------------------------------------

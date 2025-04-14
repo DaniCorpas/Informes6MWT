@@ -13,7 +13,9 @@
     "eslint": "^9.23.0"
   },
   "dependencies": {
+    "exceljs": "^4.4.0",
     "express": "^5.1.0",
-    "html2pdf.js": "^0.10.3"
+    "html2pdf.js": "^0.10.3",
+    "xlsx": "^0.18.5"
   }
 }

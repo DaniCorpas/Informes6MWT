@@ -310,3 +310,23 @@ table {
     padding: 5px; /* Ajustar el espaciado interno */
 }
 
+.pdf-style .header-center {
+    flex: 0 0 auto; /* Evitar que el contenedor se expanda */
+    width: 150px; /* Ajustar el ancho según lo necesario */
+    text-align: center; /* Centrar el texto */
+    overflow: hidden; /* Ocultar contenido que exceda el ancho */
+    border-top: none; /* Eliminar el borde superior */
+    border-bottom: none; /* Eliminar el borde inferior */
+}
+
+/* Reducir el tamaño del título solo al generar el PDF */
+.pdf-style .table-title {
+    font-size: 0.8rem; /* Reducir el tamaño de la fuente */
+    padding: 5px; /* Ajustar el espaciado interno */
+    white-space: nowrap; /* Evitar que el texto se divida en varias líneas */
+    overflow: hidden; /* Ocultar texto que exceda el ancho */
+    text-overflow: ellipsis; /* Añadir puntos suspensivos si el texto es muy largo */
+    border-top: none; /* Eliminar el borde superior */
+    border-bottom: none; /* Eliminar el borde inferior */
+}
+

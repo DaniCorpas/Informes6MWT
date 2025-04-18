@@ -61,6 +61,8 @@ async function loadTestData() {
         funcioCalculs();
         funcioAverageValues();
         funcioPeriodicValues();
+        // Generar la gráfica después de cargar los datos
+        generarGrafica();
 
         // Renderitzem les dades
         renderData();

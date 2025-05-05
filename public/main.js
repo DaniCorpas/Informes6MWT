@@ -8,11 +8,12 @@ let dataPascon = [];
 let dataStops = [];
 let dataData = [];
 let nomPDF = '6MWT_informe.pdf'; // Nom del PDF generat
+let jsonFileName = "exemple1.json"; // Nombre por defecto
 
 // Declaració de les dades Hardcoded
 const ID = 225;
 const nom = "AAAA";
-const sexe = "Female";
+let sexe = "Female";
 
 // Declaració de les dades pels càlculs
 let [date, time] = [null, null];
@@ -41,9 +42,9 @@ let periodicHValues = []; // Array per guardar els valors periòdics
 //------------------------------------------------------------------------
 
 async function loadTestData() {
+     console.log("Cargando datos de:", jsonFileName); // <-- Añade esto
     try {
-        // Fem una petició fetch a l'endpoint que hem creat
-        const response = await fetch('/api/data');
+        const response = await fetch(`/data/${jsonFileName}`);
         if (!response.ok) {
             throw new Error('Error en carregar les dades del test');
         }
@@ -62,7 +63,8 @@ async function loadTestData() {
         funcioAverageValues();
         funcioPeriodicValues();
         // Generar la gráfica después de cargar los datos
-        generarGrafica();
+        generarGraficaTest();
+        generarGraficaCheckpoints();
 
         // Renderitzem les dades
         renderData();
@@ -101,8 +103,8 @@ function renderData() {
             <table id="test-table">
                 <thead>
                     <tr>
-                        <th>Date:</th>
-                        <th>Time:</th>
+                        <th>Date</th>
+                        <th>Time</th>
                         <th>Cone distance</th>
                         <th>ID</th>
                         <th>Hash</th>
@@ -140,7 +142,7 @@ function renderData() {
             <table id="antropometric-table">
                 <thead>
                     <tr>
-                        <th>Name:</th>
+                        <th>Name</th>
                         <th>Gender</th>
                         <th>Age</th>
                         <th>Weight - Height</th>
@@ -342,12 +344,19 @@ function renderData() {
                 </thead>
                 <tbody>
                     <tr>
-                        ${funcioStops()}
-                        <td>${stops_time}</td>
-                        <td>${avg_spo} %</td>
-                        <td>${avg_hr} ppm</td>
-                        <td>${min_test_spo} %</td>
-                        <td>${sixMWSpeed} m/s</td>
+                        ${(!dataStops || dataStops.length === 0)
+                            ? `<td colspan="2">No s'ha fet cap aturada</td>
+                               <td>${avg_spo} %</td>
+                               <td>${avg_hr} ppm</td>
+                               <td>${min_test_spo} %</td>
+                               <td>${sixMWSpeed} m/s</td>`
+                            : `<td>${funcioStops()}</td>
+                               <td>${stops_time} s</td>
+                               <td>${avg_spo} %</td>
+                               <td>${avg_hr} ppm</td>
+                               <td>${min_test_spo} %</td>
+                               <td>${sixMWSpeed} m/s</td>`
+                        }
                     </tr>
                 </tbody>
             </table>
@@ -472,42 +481,14 @@ function renderData() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>${(dataPascon[0].n + 1) * 30} mts</td>
-                        <td>${dataPascon[0].t} "</td>
-                        <td>${dataPascon[0].h} ppm</td>
-                        <td>${dataPascon[0].s} %</td>
-                    </tr>
-                    <tr>
-                        <td>${(dataPascon[1].n + 1) * 30} mts</td>
-                        <td>${dataPascon[1].t} "</td>
-                        <td>${dataPascon[1].h} ppm</td>
-                        <td>${dataPascon[1].s} %</td>
-                    </tr>
-                    <tr>
-                        <td>${(dataPascon[2].n + 1) * 30} mts</td>
-                        <td>${dataPascon[2].t} "</td>
-                        <td>${dataPascon[2].h} ppm</td>
-                        <td>${dataPascon[2].s} %</td>
-                    </tr>
-                    <tr>
-                        <td>${(dataPascon[3].n + 1) * 30} mts</td>
-                        <td>${dataPascon[3].t} "</td>
-                        <td>${dataPascon[3].h} ppm</td>
-                        <td>${dataPascon[3].s} %</td>
-                    </tr>
-                    <tr>
-                        <td>${(dataPascon[4].n + 1) * 30} mts</td>
-                        <td>${dataPascon[4].t} "</td>
-                        <td>${dataPascon[4].h} ppm</td>
-                        <td>${dataPascon[4].s} %</td>
-                    </tr>
-                    <tr>
-                        <td>${(dataPascon[5].n + 1) * 30} mts</td>
-                        <td>${dataPascon[5].t} "</td>
-                        <td>${dataPascon[5].h} ppm</td>
-                        <td>${dataPascon[5].s} %</td>
-                    </tr>
+                    ${dataPascon.map((item, idx) => `
+                        <tr>
+                            <td>${(idx + 1) * dataTest.cone_distance} mts</td>
+                            <td>${item.t} "</td>
+                            <td>${item.h} ppm</td>
+                            <td>${item.s} %</td>
+                        </tr>
+                    `).join('')}
                 </tbody>
             </table>
         </div>
@@ -525,6 +506,12 @@ function renderData() {
 
 function funcioCalculs() {
     // Fem els càlculs necessaris
+
+    if (dataTest.gender) {
+        sexe = dataTest.gender
+    } else {
+        sexe = "Female";
+    }
 
     //Formategem la data i l'hora
     [date, time] = dataTest.date.split("T");
@@ -568,7 +555,7 @@ function funcioCalculs() {
     min_test_spo = (Math.min(...dataData.map(item => item.s)));
 
     // Càlcul DSP
-    dsp = dataFinal.meters * (min_test_spo / 100); // Càlcul de la DSP
+    dsp = parseFloat((dataFinal.meters * (min_test_spo / 100)).toFixed(1)); // Càlcul de la DSP
 
     // Càlcul Max Test HR
     const calculMaxTestHR = (Math.max(...dataData.map(item => item.h)));
@@ -595,7 +582,7 @@ function funcioCalculs() {
     avg_hr = parseFloat(calculAvg_hr.toFixed(1)); // Arrodonim a 1 decimal
 
     // Càlcul de la velocitat 6MW
-    sixMWSpeed = dataFinal.meters / 360; // Càlcul de la velocitat
+    sixMWSpeed = parseFloat((dataFinal.meters / 360).toFixed(1)); // Càlcul de la velocitat
 
 
 }   
@@ -645,16 +632,12 @@ function funcioGeneraComentaris() {
 
 function funcioStops() {
     if (!dataStops || dataStops.length === 0) {
-        return `<tr><td colspan="2">No s'ha fet cap aturada</td></tr>`;
+        return ""; // No devuelve nada, el mensaje ya se pone en el render
     }
-
-    // Concatenamos todos los comentarios en un único string
-    const stops = dataStops
+    // Concatenar los comentarios de las paradas
+    return dataStops
         .map(dataStop => `${dataStop.time}" with duration: ${dataStop.len}"`)
         .join('<br>');
-
-    // Retornamos una única fila con una celda que ocupa todas las columnas
-    return `<td>${stops}</td>`; // colspan ajustado al número de columnas
 }
 
 //------------------------------------------------------------------------
@@ -797,6 +780,14 @@ function descargarInformePDF() {
         });
 }
 
+//------------------------------------------------------------------------
+// Funció per canviar el fitxer JSON
+//------------------------------------------------------------------------
+function cambiarJson(nuevoArchivo) {
+    jsonFileName = nuevoArchivo;
+    loadTestData();
+}
+
 // ------------------------------------------------------------------
 // Listener pel botó de descarregar PDF
 // ------------------------------------------------------------------
@@ -811,6 +802,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const downloadExcelBtn = document.getElementById("btnExcel");
     if (downloadExcelBtn) {
         downloadExcelBtn.addEventListener("click", descargarInformeExcel);
+    }
+
+    const selector = document.getElementById('selectorJson');
+    if (selector) {
+        selector.addEventListener('change', function() {
+            console.log("Cambiando a:", this.value); // <-- Añade esto
+            cambiarJson(this.value);
+        });
     }
 });
 
@@ -864,8 +863,8 @@ function descargarInformeExcel() {
         [],
         ["Checkpoints"],
         ["Meters", "Time", "Heart Rate", "Saturation"],
-        ...dataPascon.map(item => [
-            `${(item.n + 1) * 30} mts`,
+        ...dataPascon.map(item, idx => [
+            `${(idx + 1) * dataTest.cone_distance} mts`,
             `${item.t} "`,
             `${item.h} ppm`,
             `${item.s} %`
@@ -887,5 +886,8 @@ function descargarInformeExcel() {
 // Funció per inicialitzar l'aplicació
 //------------------------------------------------------------------------
 loadTestData();
+
+
+
 
 

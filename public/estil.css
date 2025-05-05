@@ -335,8 +335,43 @@ table {
     max-width: 800px;
     margin: 20px auto;
     padding: 10px;
-    border: 1px solid #ddd;
+}
+
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px; /* Añadir espacio alrededor del botón */
+    background: none; /* Sin color de fondo */
+    border: none; /* Sin bordes */
+    cursor: pointer; /* Cursor de mano al pasar por encima */
+}
+
+button img {
+    width: 70px; /* Aumentar el tamaño del icono */
+    height: 70px;
+}
+
+button:hover img {
+    opacity: 0.8; /* Efecto hover para el icono */
+}
+
+button:hover {
+    opacity: 0.9; /* Efecto hover */
+}
+
+.graficas-flex {
+    display: flex;
+    justify-content: center;
+    gap: 30px; /* Espacio entre las gráficas */
+}
+
+.graficas-flex canvas {
+    width: 400px;
+    height: 300px;
+    max-width: 100%;
+    background: #fff;
     border-radius: 8px;
-    background-color: #f9f9f9;
+    box-shadow: 0 2px 8px #0001;
 }
 

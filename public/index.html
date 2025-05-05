@@ -14,17 +14,32 @@
     </head>
     <body>
         <div class="container">
-            <h1>Informe Test de 6 minuts</h1>
+            <h1>Informe 6MW</h1>
+
+            <select id="selectorJson">
+                <option value="exemple1.json">exemple1.json</option>
+                <option value="exemple2.json">exemple2.json</option>
+                <option value="exemple3.json">exemple3.json</option>
+                <option value="exemple4.json">exemple4.json</option>
+                <option value="exemple5.json">exemple5.json</option>
+                <option value="exemple6.json">exemple6.json</option>
+                <!-- Añade más opciones según tus archivos -->
+            </select>
+
+            <div id="graficaContainer" class="graficas-flex">
+                <canvas id="graficaTest"></canvas>
+                <canvas id="graficaCheckpoints"></canvas>
+            </div>
 
             <!-- Div on mostrarem dades llegides del JSON -->
             <div id="info"></div>
 
-            <div id="graficaContainer" style="width: 100%; max-width: 800px; margin: auto;">
-                <!-- La gráfica se generará aquí -->
-            </div>
-
-            <button id="btnPDF">Descarregar PDF</button>
-            <button id="btnExcel">Descarregar Excel</button>
+            <button id="btnPDF">
+                <img src="icons/pdf-icon.png" alt="PDF" />
+            </button>
+            <button id="btnExcel">
+                <img src="icons/excel-icon.png" alt="Excel" />
+            </button>
         </div>    
          <!-- Archivo principal -->
          <script src="main.js"></script>

@@ -2,8 +2,8 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
-// Indica aquí qué JSON quieres cargar (por defecto '1')
-// Puedes cambiar DATA_INDEX a '2', '3', etc., o exportar la variable antes de arrancar:
+// Indicamos que exemple1.json es el fichero que cargamos por defecto
+// Podemoss cambiar DATA_INDEX a '2', '3', etc., o exportar la variable antes de arrancar:
 //   DATA_INDEX=2 npm run dev
 const DATA_INDEX = process.env.DATA_INDEX || '1';
 const dataFileName = `exemple${DATA_INDEX}.json`;

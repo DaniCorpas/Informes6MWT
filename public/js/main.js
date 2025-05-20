@@ -423,7 +423,7 @@ function renderData() {
     enableDragAndDrop();
 }
 
-   
+
 
 //------------------------------------------------------------------------
 // Funció per gestionar el clic a les taules

@@ -195,6 +195,24 @@ h1 {
     display: none; /* Amagar l'element */
 }
 
+
+.graficas-flex {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    align-items: flex-start;
+    flex-direction: row;
+}
+
+.graficas-flex canvas {
+    width: 400px;
+    height: 300px;
+    max-width: 100%;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px #0001;
+}
+
 /* Para pantallas pequeñas (móviles) */
 @media (max-width: 768px) {
     .data-table {
@@ -274,6 +292,10 @@ h1 {
     .table-header {
         padding: 8px; /* Reducir espaciado interno */
     }
+    .graficas-flex {
+        flex-direction: column;
+        align-items: center;
+    }
 }
 
 table {
@@ -351,27 +373,11 @@ button img {
     width: 70px; /* Aumentar el tamaño del icono */
     height: 70px;
 }
-
 button:hover img {
     opacity: 0.8; /* Efecto hover para el icono */
 }
 
 button:hover {
     opacity: 0.9; /* Efecto hover */
-}
-
-.graficas-flex {
-    display: flex;
-    justify-content: center;
-    gap: 30px; /* Espacio entre las gráficas */
-}
-
-.graficas-flex canvas {
-    width: 400px;
-    height: 300px;
-    max-width: 100%;
-    background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 8px #0001;
 }
 
